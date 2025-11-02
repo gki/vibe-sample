@@ -3,15 +3,16 @@ import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { render, screen, cleanup } from '@testing-library/react';
 
 // Issue #3677対応: useQueryをモックしてApollo Clientへの依存を回避
-vi.mock('@apollo/client', async () => {
-    const actual = await vi.importActual('@apollo/client');
+// @apollo/client/reactからインポートしているため、こちらをモック
+vi.mock('@apollo/client/react', async () => {
+    const actual = await vi.importActual('@apollo/client/react');
     return {
         ...actual,
         useQuery: vi.fn(),
     };
 });
 
-import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client/react';
 import { TodoList } from './TodoList';
 
 describe('TodoList Component', () => {

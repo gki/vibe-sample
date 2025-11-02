@@ -33,6 +33,13 @@ describe('GraphQL Resolvers Integration Tests', () => {
 
   describe('todos query', () => {
     it('should fetch all todos', async () => {
+      // このテストの前に既存データをクリーンアップ
+      await prisma.todo.deleteMany({
+        where: {
+          title: { in: ['Todo 1', 'Todo 2'] },
+        },
+      });
+
       // テストデータを作成
       await prisma.todo.createMany({
         data: [
@@ -46,8 +53,10 @@ describe('GraphQL Resolvers Integration Tests', () => {
       });
 
       expect(todos.length).toBeGreaterThanOrEqual(2);
-      expect(todos[0].title).toBe('Todo 1');
-      expect(todos[1].title).toBe('Todo 2');
+      const todo1 = todos.find((t) => t.title === 'Todo 1');
+      const todo2 = todos.find((t) => t.title === 'Todo 2');
+      expect(todo1).toBeDefined();
+      expect(todo2).toBeDefined();
     });
   });
 
@@ -76,6 +85,13 @@ describe('GraphQL Resolvers Integration Tests', () => {
 
   describe('deleteTodo', () => {
     it('should delete a todo', async () => {
+      // このテストの前にデータをクリーンアップ
+      await prisma.todo.deleteMany({
+        where: {
+          title: 'To Delete',
+        },
+      });
+
       const todo = await prisma.todo.create({
         data: {
           title: 'To Delete',
