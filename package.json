@@ -1,0 +1,36 @@
+{
+  "name": "vibe-sample",
+  "version": "1.0.0",
+  "description": "AI Coding Sample Web App - Monorepo",
+  "private": true,
+  "workspaces": [
+    "web",
+    "api"
+  ],
+  "scripts": {
+    "dev": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api dev\" \"pnpm --filter web dev\"",
+    "dev:api": "pnpm --filter api dev",
+    "dev:web": "pnpm --filter web dev",
+    "build": "pnpm --filter api build && pnpm --filter web build",
+    "build:api": "pnpm --filter api build",
+    "build:web": "pnpm --filter web build",
+    "start": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api start\" \"pnpm --filter web start\"",
+    "test": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api test\" \"pnpm --filter web test\"",
+    "test:api": "pnpm --filter api test",
+    "test:web": "pnpm --filter web test",
+    "test:coverage": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api test:coverage\" \"pnpm --filter web test:coverage\"",
+    "lint": "pnpm --filter web lint",
+    "lint:web": "pnpm --filter web lint",
+    "format": "pnpm --filter web format",
+    "format:web": "pnpm --filter web format"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "packageManager": "pnpm@10.10.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=10.0.0"
+  }
+}
+

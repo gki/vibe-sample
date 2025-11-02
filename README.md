@@ -19,15 +19,82 @@ vibe-sample/
 ### 前提条件
 
 - Node.js (推奨バージョン: 18以上)
-- Python (推奨バージョン: 3.9以上) - バックエンドで使用する場合
+- pnpm (推奨バージョン: 10.0.0以上)
 - Git
 
 ### 初期セットアップ
+
+1. リポジトリをクローン
+```bash
+git clone <repository-url>
+cd vibe-sample
+```
+
+2. 依存関係のインストール
+```bash
+pnpm install
+```
+
+3. 環境変数の設定
+- API: `api/.env` ファイルを作成し、`DATABASE_URL` と `PORT` を設定
+- Web: `web/.env.local` ファイルを作成し、必要に応じて環境変数を設定
 
 詳細は各ディレクトリのREADMEを参照してください。
 
 - [Webフロントエンドのセットアップ](./web/README.md)
 - [APIバックエンドのセットアップ](./api/README.md)
+
+## 動作確認
+
+ルートディレクトリの `package.json` に用意されているコマンドを使用して、開発・テスト・ビルドを実行できます。
+
+### 開発サーバーの起動
+
+**APIとWebを同時に起動:**
+```bash
+pnpm dev
+```
+
+**個別に起動:**
+```bash
+pnpm dev:api   # APIのみ（http://localhost:3001）
+pnpm dev:web   # Webのみ（http://localhost:3000）
+```
+
+### テストの実行
+
+**APIとWebのテストを同時に実行:**
+```bash
+pnpm test
+```
+
+**個別に実行:**
+```bash
+pnpm test:api       # APIのテストのみ
+pnpm test:web       # Webのテストのみ
+pnpm test:coverage  # カバレッジ付きでテスト実行
+```
+
+### ビルドの確認
+
+**APIとWebをビルド:**
+```bash
+pnpm build
+```
+
+**個別にビルド:**
+```bash
+pnpm build:api  # APIのみ
+pnpm build:web  # Webのみ
+```
+
+### その他のコマンド
+
+```bash
+pnpm lint        # WebのLintチェック
+pnpm format      # Webのコードフォーマット
+pnpm start       # プロダクションモードで起動（事前にビルドが必要）
+```
 
 ## 開発ルール
 
