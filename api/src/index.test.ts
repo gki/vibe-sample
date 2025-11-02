@@ -1,7 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { Hono } from 'hono';
 import { graphqlServer } from '@hono/graphql-server';
-import { schema, resolvers } from './graphql/schema.js';
+import { schema } from './graphql/schema.js';
 
 describe('Hono GraphQL Server Setup', () => {
   it('should create Hono app with GraphQL endpoint', () => {
@@ -11,7 +11,6 @@ describe('Hono GraphQL Server Setup', () => {
       '/graphql',
       graphqlServer({
         schema,
-        rootResolver: resolvers,
       })
     );
 
