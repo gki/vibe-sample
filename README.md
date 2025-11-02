@@ -88,11 +88,26 @@ pnpm build:api  # APIのみ
 pnpm build:web  # Webのみ
 ```
 
+### リント・コード品質チェック
+
+**リントとコード品質チェック:**
+```bash
+pnpm lint       # knip（未使用コード検出）+ ESLint（API + Web）
+pnpm lint:api   # ESLintのみ（API）
+pnpm lint:web   # ESLintのみ（Web）
+pnpm lint:knip  # knipのみ（未使用コード・依存関係の検出）
+```
+
+**コードフォーマット:**
+```bash
+pnpm format     # Prettierでフォーマット（API + Web）
+pnpm format:api # Prettierでフォーマット（APIのみ）
+pnpm format:web # Prettierでフォーマット（Webのみ）
+```
+
 ### その他のコマンド
 
 ```bash
-pnpm lint        # WebのLintチェック
-pnpm format      # Webのコードフォーマット
 pnpm start       # プロダクションモードで起動（事前にビルドが必要）
 ```
 

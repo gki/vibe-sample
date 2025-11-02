@@ -21,20 +21,20 @@ describe('TodoList Component', () => {
         vi.clearAllMocks();
     });
 
-    it('should render loading state initially', () => {
+      it('should render loading state initially', () => {
         // useQueryをモック
-        (useQuery as any).mockReturnValue({
-            loading: true,
-            error: undefined,
-            data: undefined,
+        (useQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+          loading: true,
+          error: undefined,
+          data: undefined,
         });
 
         render(<TodoList />);
         expect(screen.getByText('Loading...')).toBeInTheDocument();
-    });
+      });
 
-    it('should render todos when data is loaded', () => {
-        (useQuery as any).mockReturnValue({
+      it('should render todos when data is loaded', () => {
+        (useQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
             loading: false,
             error: undefined,
             data: {
@@ -54,21 +54,21 @@ describe('TodoList Component', () => {
         expect(screen.getByText('Test Todo 1')).toBeInTheDocument();
     });
 
-    it('should render empty state when no todos', () => {
-        (useQuery as any).mockReturnValue({
-            loading: false,
-            error: undefined,
-            data: {
-                todos: [],
-            },
+      it('should render empty state when no todos', () => {
+        (useQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
+          loading: false,
+          error: undefined,
+          data: {
+            todos: [],
+          },
         });
 
         render(<TodoList />);
         expect(screen.getByText('No todos')).toBeInTheDocument();
-    });
+      });
 
-    it('should render error state', () => {
-        (useQuery as any).mockReturnValue({
+      it('should render error state', () => {
+        (useQuery as unknown as ReturnType<typeof vi.fn>).mockReturnValue({
             loading: false,
             error: { message: 'GraphQL error' },
             data: undefined,
