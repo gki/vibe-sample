@@ -1,13 +1,14 @@
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
-import { fileURLToPath } from 'url';
-import { dirname, resolve } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    tsconfigPaths(),
+    react({
+      jsxRuntime: 'automatic',
+    }),
+  ],
   test: {
     globals: true,
     environment: 'happy-dom',
@@ -16,10 +17,12 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
     },
+    // Issue #3677対応: テスト間の分離を強化
+    isolate: true,
   },
   resolve: {
-    alias: {
-      '@': resolve(__dirname, './'),
-    },
+    conditions: ['development', 'browser'],
+    // Issue #3677対応: モジュール解決の改善
+    dedupe: ['@apollo/client', 'react', 'react-dom'],
   },
 });
