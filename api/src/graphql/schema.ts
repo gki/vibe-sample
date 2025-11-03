@@ -1,5 +1,5 @@
 import { makeExecutableSchema } from '@graphql-tools/schema';
-import { GraphQLSchema } from 'graphql';
+import { GraphQLSchema, GraphQLError } from 'graphql';
 import prisma from '../prisma/client.js';
 
 export const typeDefs = `
@@ -38,6 +38,34 @@ export const resolvers = {
   },
   Mutation: {
     createTodo: async (_: unknown, args: { title: string }) => {
+      // バリデーション: 空文字チェック
+      if (args.title === '') {
+        throw new GraphQLError('タイトルを入力してください。', {
+          extensions: { code: 'VALIDATION_ERROR' },
+        });
+      }
+
+      // バリデーション: 100文字制限
+      if (args.title.length > 100) {
+        throw new GraphQLError('タイトルは100文字以内で入力してください。', {
+          extensions: { code: 'VALIDATION_ERROR' },
+        });
+      }
+
+      // バリデーション: 改行文字チェック
+      if (args.title.includes('\n')) {
+        throw new GraphQLError('タイトルに改行を含めることはできません。', {
+          extensions: { code: 'VALIDATION_ERROR' },
+        });
+      }
+
+      // バリデーション: タブ文字チェック
+      if (args.title.includes('\t')) {
+        throw new GraphQLError('タイトルにタブを含めることはできません。', {
+          extensions: { code: 'VALIDATION_ERROR' },
+        });
+      }
+
       return await prisma.todo.create({
         data: {
           title: args.title,
