@@ -1,0 +1,11 @@
+---
+description: コーディング規約
+globs: ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.jsx"]
+alwaysApply: true
+---
+
+# コーディング規約
+
+コーディング規約の詳細については、以下を参照してください：
+
+[docs/coding-standards.md](../docs/coding-standards.md)

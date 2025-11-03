@@ -1,0 +1,18 @@
+---
+description: プロジェクト全体のルールと開発フロー
+alwaysApply: true
+---
+
+# プロジェクトルール
+
+プロジェクトのルール、アーキテクチャ、プロセスについては、以下のドキュメントを参照してください：
+
+- [コーディング規約](../docs/coding-standards.md)
+- [TDDプロセスと開発フロー](../docs/tdd-process.md)
+- [Git運用ルール](../docs/git-workflow.md)
+- [テスト](../docs/testing.md)
+- [インフラ・環境関連](../docs/infrastructure.md)
+- [コードレビュー](../docs/code-review.md)
+- [プロジェクト構造とその他](../docs/project-structure.md)
+
+すべての詳細なルールは上記のドキュメントに記載されています。

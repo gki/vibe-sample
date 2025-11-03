@@ -1,0 +1,10 @@
+---
+description: Git運用ルール
+alwaysApply: true
+---
+
+# Git運用ルール
+
+Git運用ルールの詳細については、以下を参照してください：
+
+[docs/git-workflow.md](../docs/git-workflow.md)
