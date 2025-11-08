@@ -44,7 +44,9 @@ describe('GraphQL Schema', () => {
     `;
 
     const schema = buildSchema(typeDefs);
-    expect(schema).toBeDefined();
+    expect(schema).toBeInstanceOf(Object);
+    expect(schema.getQueryType()).toBeDefined();
+    expect(schema.getMutationType()).toBeDefined();
   });
 });
 

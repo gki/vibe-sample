@@ -1,5 +1,6 @@
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { GraphQLSchema, GraphQLError } from 'graphql';
+import { PrismaClient } from '@prisma/client';
 import prisma from '../prisma/client.js';
 
 export const typeDefs = `
@@ -23,15 +24,15 @@ export const typeDefs = `
   }
 `;
 
-export const resolvers = {
+export const createResolvers = (prismaClient: PrismaClient = prisma) => ({
   Query: {
     todos: async () => {
-      return await prisma.todo.findMany({
+      return await prismaClient.todo.findMany({
         orderBy: { createdAt: 'desc' },
       });
     },
     todo: async (_: unknown, args: { id: number }) => {
-      return await prisma.todo.findUnique({
+      return await prismaClient.todo.findUnique({
         where: { id: args.id },
       });
     },
@@ -66,7 +67,7 @@ export const resolvers = {
         });
       }
 
-      return await prisma.todo.create({
+      return await prismaClient.todo.create({
         data: {
           title: args.title,
           completed: false,
@@ -81,19 +82,22 @@ export const resolvers = {
       if (args.title !== undefined) updateData.title = args.title;
       if (args.completed !== undefined) updateData.completed = args.completed;
 
-      return await prisma.todo.update({
+      return await prismaClient.todo.update({
         where: { id: args.id },
         data: updateData,
       });
     },
     deleteTodo: async (_: unknown, args: { id: number }) => {
-      await prisma.todo.delete({
+      await prismaClient.todo.delete({
         where: { id: args.id },
       });
       return true;
     },
   },
-};
+});
+
+// 後方互換性のため、デフォルトのリゾルバーをエクスポート
+export const resolvers = createResolvers();
 
 // makeExecutableSchemaでスキーマとリゾルバーを統合
 export const schema: GraphQLSchema = makeExecutableSchema({

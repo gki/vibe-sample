@@ -14,7 +14,7 @@ describe('Hono GraphQL Server Setup', () => {
       })
     );
 
-    expect(app).toBeDefined();
+    expect(app).toBeInstanceOf(Object);
   });
 
   it('should have health check endpoint', async () => {

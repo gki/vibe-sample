@@ -4,8 +4,10 @@ import prisma from './prisma/client.js';
 describe('Database Connection Check', () => {
   it('should be able to connect to the database', async () => {
     // データベースに接続できるかテスト
-    const result = await prisma.$queryRaw`SELECT 1 as value`;
-    expect(result).toBeDefined();
+    const result = await prisma.$queryRaw<Array<{ value: bigint }>>`SELECT 1 as value`;
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.length).toBe(1);
+    expect(result[0].value).toBe(1n);
   });
 
   it('should have todos table', async () => {
@@ -23,7 +25,7 @@ describe('Database Connection Check', () => {
       PRAGMA table_info(todos)
     `;
     expect(columns.length).toBeGreaterThan(0);
-    
+
     const columnNames = columns.map((c) => c.name);
     expect(columnNames).toContain('id');
     expect(columnNames).toContain('title');

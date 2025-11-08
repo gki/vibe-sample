@@ -47,6 +47,8 @@ const config: KnipConfig = {
         '**/*.d.ts',
         'pnpm-lock.yaml',
         'pnpm-workspace.yaml',
+        'playwright.config.ts',
+        'e2e/**',
     ],
     ignoreDependencies: [
         // 設定ファイルで使用される
