@@ -36,11 +36,11 @@ test.describe('TODO作成機能のE2Eテスト', () => {
     await expect(submitButton).toBeVisible();
     await submitButton.click();
 
+    // TODOが一覧に表示されるまで待機（ミューテーション完了を待つ）
+    await expect(page.getByText('E2Eテスト用のTODO').first()).toBeVisible({ timeout: 10000 });
+
     // 入力フィールドがクリアされることを確認
     await expect(input).toHaveValue('');
-
-    // TODOが一覧に表示されることを確認
-    await expect(page.getByText('E2Eテスト用のTODO')).toBeVisible({ timeout: 10000 });
   });
 
   test('空のタイトルでTODOを作成しようとするとエラーが表示される', async ({
@@ -135,11 +135,11 @@ test.describe('TODO作成機能のE2Eテスト', () => {
     // Enterキーを押す
     await input.press('Enter');
 
+    // TODOが一覧に表示されるまで待機（ミューテーション完了を待つ）
+    await expect(page.getByText('Enterキーで作成').first()).toBeVisible({ timeout: 10000 });
+
     // 入力フィールドがクリアされることを確認
     await expect(input).toHaveValue('');
-
-    // TODOが一覧に表示されることを確認
-    await expect(page.getByText('Enterキーで作成')).toBeVisible({ timeout: 10000 });
   });
 });
 

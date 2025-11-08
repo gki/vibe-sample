@@ -16,7 +16,8 @@
     "format": "prettier --write \"**/*.{ts,js,json}\"",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:studio": "prisma studio"
+    "prisma:studio": "prisma studio",
+    "test:e2e:setup": "DATABASE_URL='file:./prisma/test.db' prisma db push --skip-generate"
   },
   "keywords": [],
   "author": "",

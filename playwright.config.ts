@@ -38,6 +38,10 @@ export default defineConfig({
       url: 'http://localhost:3001/health',
       reuseExistingServer: !process.env.CI,
       timeout: 120 * 1000,
+      /* E2Eテストはテスト専用データベースを使用 */
+      env: {
+        DATABASE_URL: process.env.DATABASE_URL || 'file:./prisma/test.db',
+      },
     },
     {
       command: 'pnpm --filter web dev',
