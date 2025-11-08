@@ -39,8 +39,7 @@ test.describe('TODO作成機能のE2Eテスト', () => {
     // 入力フィールドがクリアされることを確認
     await expect(input).toHaveValue('');
 
-    // TODOが一覧に表示されることを確認（少し待機してから確認）
-    await page.waitForTimeout(500);
+    // TODOが一覧に表示されることを確認
     await expect(page.getByText('E2Eテスト用のTODO')).toBeVisible({ timeout: 10000 });
   });
 
@@ -59,9 +58,6 @@ test.describe('TODO作成機能のE2Eテスト', () => {
     // 登録ボタンをクリック（タイトルを入力せずに）
     const submitButton = page.getByRole('button', { name: '登録' });
     await submitButton.click();
-
-    // アラートが表示されるまで待機
-    await page.waitForTimeout(100);
   });
 
   test('100文字を超えるタイトルでTODOを作成しようとするとエラーが表示される', async ({
@@ -84,9 +80,6 @@ test.describe('TODO作成機能のE2Eテスト', () => {
     // 登録ボタンをクリック
     const submitButton = page.getByRole('button', { name: '登録' });
     await submitButton.click();
-
-    // アラートが表示されるまで待機
-    await page.waitForTimeout(100);
   });
 
   test('改行を含むタイトルでTODOを作成しようとするとエラーが表示される', async ({
@@ -108,9 +101,6 @@ test.describe('TODO作成機能のE2Eテスト', () => {
     // 登録ボタンをクリック
     const submitButton = page.getByRole('button', { name: '登録' });
     await submitButton.click();
-
-    // アラートが表示されるまで待機
-    await page.waitForTimeout(100);
   });
 
   test('タブを含むタイトルでTODOを作成しようとするとエラーが表示される', async ({
@@ -132,9 +122,6 @@ test.describe('TODO作成機能のE2Eテスト', () => {
     // 登録ボタンをクリック
     const submitButton = page.getByRole('button', { name: '登録' });
     await submitButton.click();
-
-    // アラートが表示されるまで待機
-    await page.waitForTimeout(100);
   });
 
   test('EnterキーでTODOを作成できる', async ({ page }) => {
@@ -151,8 +138,7 @@ test.describe('TODO作成機能のE2Eテスト', () => {
     // 入力フィールドがクリアされることを確認
     await expect(input).toHaveValue('');
 
-    // TODOが一覧に表示されることを確認（少し待機してから確認）
-    await page.waitForTimeout(500);
+    // TODOが一覧に表示されることを確認
     await expect(page.getByText('Enterキーで作成')).toBeVisible({ timeout: 10000 });
   });
 });
