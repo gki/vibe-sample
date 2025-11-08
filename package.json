@@ -25,7 +25,7 @@
     "test:web:unit": "pnpm --filter web test:unit",
     "test:web:integration": "pnpm --filter web test:integration",
     "test:coverage": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api test:coverage\" \"pnpm --filter web test:coverage\"",
-    "test:e2e": "pnpm --filter api test:e2e:setup && playwright test",
+    "test:e2e": "pnpm --filter api test:e2e:setup && export DATABASE_URL=\"file:$(pwd)/api/prisma/test.db\" && playwright test && pnpm --filter api test:e2e:cleanup",
     "test:e2e:ui": "playwright test --ui",
     "test:e2e:headed": "playwright test --headed",
     "lint": "pnpm knip && pnpm --filter api lint && pnpm --filter web lint",

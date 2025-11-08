@@ -23,7 +23,7 @@ export function useCreateTodo(options?: UseCreateTodoOptions) {
     // バリデーション
     const validation = validateTodoTitle(title);
     if (!validation.isValid) {
-      const errorMessage = validation.errorMessage || 'バリデーションエラーが発生しました。';
+      const errorMessage = validation.errorMessage;
       window.alert(errorMessage);
       if (options?.onError) {
         options.onError(new Error(errorMessage));
