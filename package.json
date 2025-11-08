@@ -37,7 +37,7 @@
     "format:web": "pnpm --filter web format"
   },
   "devDependencies": {
-    "@playwright/test": "^1.48.0",
+    "@playwright/test": "^1.56.1",
     "@prisma/client": "^6.18.0",
     "concurrently": "^8.2.2",
     "knip": "^5.66.4"

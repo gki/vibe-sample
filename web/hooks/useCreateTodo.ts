@@ -54,7 +54,7 @@ export function useCreateTodo(options?: UseCreateTodoOptions) {
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      handleSubmit(e);
+      handleSubmit();
     }
   };
 

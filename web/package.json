@@ -10,7 +10,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css}\"",
     "test": "vitest",
     "test:unit": "vitest --exclude \"**/*integration.test.*\"",
-    "test:integration": "vitest components/todo/CreateTodoForm.integration.test.tsx",
+    "test:integration": "VITEST_INTEGRATION=true vitest --run",
     "test:coverage": "vitest --coverage"
   },
   "dependencies": {
