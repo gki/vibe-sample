@@ -9,7 +9,7 @@
     "build": "tsc",
     "start": "node dist/index.js",
     "test": "vitest",
-    "test:unit": "vitest --exclude \"**/*integration.test.*\"",
+    "test:unit": "vitest --exclude \"**/*.integration.test.*\"",
     "test:integration": "VITEST_INTEGRATION=true vitest --run",
     "test:coverage": "vitest --coverage",
     "lint": "eslint .",

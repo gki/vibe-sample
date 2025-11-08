@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css}\"",
     "test": "vitest",
-    "test:unit": "vitest --exclude \"**/*integration.test.*\"",
+    "test:unit": "vitest --exclude \"**/*.integration.test.*\"",
     "test:integration": "VITEST_INTEGRATION=true vitest --run",
     "test:coverage": "vitest --coverage"
   },
