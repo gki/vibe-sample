@@ -4,7 +4,7 @@ import { graphqlServer } from '@hono/graphql-server';
 import { schema } from './graphql/schema.js';
 
 describe('Hono GraphQL Server Setup', () => {
-  it('should create Hono app with GraphQL endpoint', () => {
+  it('GraphQLエンドポイントを持つHonoアプリを作成できること', () => {
     const app = new Hono();
 
     app.use(
@@ -17,7 +17,7 @@ describe('Hono GraphQL Server Setup', () => {
     expect(app).toBeInstanceOf(Object);
   });
 
-  it('should have health check endpoint', async () => {
+  it('ヘルスチェックエンドポイントが存在すること', async () => {
     const app = new Hono();
 
     app.get('/health', (c) => {

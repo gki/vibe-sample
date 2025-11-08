@@ -20,7 +20,7 @@ describe('GraphQL Resolvers Integration Tests', () => {
   });
 
   describe('createTodo mutation', () => {
-    it('should create a new todo', async () => {
+    it('新しいTODOを作成できること', async () => {
       const resolvers = createResolvers(prisma);
       const result = await resolvers.Mutation.createTodo(undefined, {
         title: 'Test Todo',
@@ -33,14 +33,14 @@ describe('GraphQL Resolvers Integration Tests', () => {
       expect(result.updatedAt).toBeInstanceOf(Date);
     });
 
-    it('should reject empty title', async () => {
+    it('空のタイトルを拒否すること', async () => {
       const resolvers = createResolvers(prisma);
       await expect(
         resolvers.Mutation.createTodo(undefined, { title: '' })
       ).rejects.toThrow('タイトルを入力してください。');
     });
 
-    it('should reject title longer than 100 characters', async () => {
+    it('100文字を超えるタイトルを拒否すること', async () => {
       const resolvers = createResolvers(prisma);
       const longTitle = 'a'.repeat(101);
       await expect(
@@ -48,14 +48,14 @@ describe('GraphQL Resolvers Integration Tests', () => {
       ).rejects.toThrow('タイトルは100文字以内で入力してください。');
     });
 
-    it('should reject title with newline', async () => {
+    it('改行を含むタイトルを拒否すること', async () => {
       const resolvers = createResolvers(prisma);
       await expect(
         resolvers.Mutation.createTodo(undefined, { title: 'Test\nTodo' })
       ).rejects.toThrow('タイトルに改行を含めることはできません。');
     });
 
-    it('should reject title with tab', async () => {
+    it('タブを含むタイトルを拒否すること', async () => {
       const resolvers = createResolvers(prisma);
       await expect(
         resolvers.Mutation.createTodo(undefined, { title: 'Test\tTodo' })
@@ -64,7 +64,7 @@ describe('GraphQL Resolvers Integration Tests', () => {
   });
 
   describe('todos query', () => {
-    it('should fetch all todos', async () => {
+    it('全てのTODOを取得できること', async () => {
       // テストデータを作成
       await prisma.todo.createMany({
         data: [

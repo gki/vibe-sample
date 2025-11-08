@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import prisma from './prisma/client.js';
 
 describe('Database Connection Check', () => {
-  it('should be able to connect to the database', async () => {
+  it('データベースに接続できること', async () => {
     // データベースに接続できるかテスト
     const result = await prisma.$queryRaw<Array<{ value: bigint }>>`SELECT 1 as value`;
     expect(Array.isArray(result)).toBe(true);
@@ -10,7 +10,7 @@ describe('Database Connection Check', () => {
     expect(result[0].value).toBe(1n);
   });
 
-  it('should have todos table', async () => {
+  it('todosテーブルが存在すること', async () => {
     // todosテーブルが存在するか確認
     const tables = await prisma.$queryRaw<Array<{ name: string }>>`
       SELECT name FROM sqlite_master WHERE type='table' AND name='todos'
@@ -19,7 +19,7 @@ describe('Database Connection Check', () => {
     expect(tables[0].name).toBe('todos');
   });
 
-  it('should be able to query todos table structure', async () => {
+  it('todosテーブルの構造を取得できること', async () => {
     // テーブル構造を確認
     const columns = await prisma.$queryRaw<Array<{ name: string; type: string }>>`
       PRAGMA table_info(todos)

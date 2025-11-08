@@ -21,7 +21,7 @@ describe('GraphQL Schema', () => {
     await prisma.$disconnect();
   });
 
-  it('should define Todo type correctly', () => {
+  it('Todo型が正しく定義されていること', () => {
     const typeDefs = `
       type Todo {
         id: Int!

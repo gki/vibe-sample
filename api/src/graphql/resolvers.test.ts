@@ -32,25 +32,25 @@ describe('GraphQL Resolvers - Unit Tests', () => {
   });
 
   describe('Query', () => {
-    it('should have todos resolver', () => {
+    it('todosリゾルバーが存在すること', () => {
       expect(typeof resolvers.Query.todos).toBe('function');
     });
 
-    it('should have todo resolver', () => {
+    it('todoリゾルバーが存在すること', () => {
       expect(typeof resolvers.Query.todo).toBe('function');
     });
   });
 
   describe('Mutation', () => {
-    it('should have createTodo resolver', () => {
+    it('createTodoリゾルバーが存在すること', () => {
       expect(typeof resolvers.Mutation.createTodo).toBe('function');
     });
 
-    it('should have updateTodo resolver', () => {
+    it('updateTodoリゾルバーが存在すること', () => {
       expect(typeof resolvers.Mutation.updateTodo).toBe('function');
     });
 
-    it('should have deleteTodo resolver', () => {
+    it('deleteTodoリゾルバーが存在すること', () => {
       expect(typeof resolvers.Mutation.deleteTodo).toBe('function');
     });
   });

@@ -3,12 +3,12 @@ import { apolloClient } from './client';
 import { InMemoryCache } from '@apollo/client';
 
 describe('Apollo Client', () => {
-  it('should create Apollo Client instance', () => {
+  it('Apollo Clientインスタンスを作成できること', () => {
     expect(apolloClient).toBeInstanceOf(Object);
     expect(apolloClient.link).toBeDefined();
   });
 
-  it('should have InMemoryCache configured', () => {
+  it('InMemoryCacheが設定されていること', () => {
     expect(apolloClient.cache).toBeInstanceOf(InMemoryCache);
   });
 });
