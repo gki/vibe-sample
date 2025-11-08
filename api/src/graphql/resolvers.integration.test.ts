@@ -1,4 +1,5 @@
-import { describe, it, expect, beforeAll, afterAll } from 'vitest';
+import { describe, it, expect, beforeAll, afterAll, beforeEach } from 'vitest';
+import { createResolvers } from './schema.js';
 import prisma from '../prisma/client.js';
 
 describe('GraphQL Resolvers Integration Tests', () => {
@@ -13,33 +14,57 @@ describe('GraphQL Resolvers Integration Tests', () => {
     await prisma.$disconnect();
   });
 
-  describe('createTodo', () => {
-    it('should create a new todo', async () => {
-      const todo = await prisma.todo.create({
-        data: {
-          title: 'Test Todo',
-          completed: false,
-        },
+  beforeEach(async () => {
+    // 各テスト前にデータベースをクリーンアップ
+    await prisma.todo.deleteMany({});
+  });
+
+  describe('createTodo mutation', () => {
+    it('新しいTODOを作成できること', async () => {
+      const resolvers = createResolvers(prisma);
+      const result = await resolvers.Mutation.createTodo(undefined, {
+        title: 'Test Todo',
       });
 
-      expect(todo).toBeDefined();
-      expect(todo.id).toBeGreaterThan(0);
-      expect(todo.title).toBe('Test Todo');
-      expect(todo.completed).toBe(false);
-      expect(todo.createdAt).toBeInstanceOf(Date);
-      expect(todo.updatedAt).toBeInstanceOf(Date);
+      expect(result.id).toBeGreaterThan(0);
+      expect(result.title).toBe('Test Todo');
+      expect(result.completed).toBe(false);
+      expect(result.createdAt).toBeInstanceOf(Date);
+      expect(result.updatedAt).toBeInstanceOf(Date);
+    });
+
+    it('空のタイトルを拒否すること', async () => {
+      const resolvers = createResolvers(prisma);
+      await expect(
+        resolvers.Mutation.createTodo(undefined, { title: '' })
+      ).rejects.toThrow('タイトルを入力してください。');
+    });
+
+    it('100文字を超えるタイトルを拒否すること', async () => {
+      const resolvers = createResolvers(prisma);
+      const longTitle = 'a'.repeat(101);
+      await expect(
+        resolvers.Mutation.createTodo(undefined, { title: longTitle })
+      ).rejects.toThrow('タイトルは100文字以内で入力してください。');
+    });
+
+    it('改行を含むタイトルを拒否すること', async () => {
+      const resolvers = createResolvers(prisma);
+      await expect(
+        resolvers.Mutation.createTodo(undefined, { title: 'Test\nTodo' })
+      ).rejects.toThrow('タイトルに改行を含めることはできません。');
+    });
+
+    it('タブを含むタイトルを拒否すること', async () => {
+      const resolvers = createResolvers(prisma);
+      await expect(
+        resolvers.Mutation.createTodo(undefined, { title: 'Test\tTodo' })
+      ).rejects.toThrow('タイトルにタブを含めることはできません。');
     });
   });
 
   describe('todos query', () => {
-    it('should fetch all todos', async () => {
-      // このテストの前に既存データをクリーンアップ
-      await prisma.todo.deleteMany({
-        where: {
-          title: { in: ['Todo 1', 'Todo 2'] },
-        },
-      });
-
+    it('全てのTODOを取得できること', async () => {
       // テストデータを作成
       await prisma.todo.createMany({
         data: [
@@ -48,66 +73,18 @@ describe('GraphQL Resolvers Integration Tests', () => {
         ],
       });
 
-      const todos = await prisma.todo.findMany({
-        orderBy: { createdAt: 'desc' },
-      });
+      const resolvers = createResolvers(prisma);
+      const result = await resolvers.Query.todos();
 
-      expect(todos.length).toBeGreaterThanOrEqual(2);
-      const todo1 = todos.find((t) => t.title === 'Todo 1');
-      const todo2 = todos.find((t) => t.title === 'Todo 2');
-      expect(todo1).toBeDefined();
-      expect(todo2).toBeDefined();
-    });
-  });
+      expect(Array.isArray(result)).toBe(true);
+      expect(result.length).toBeGreaterThanOrEqual(2);
 
-  describe('updateTodo', () => {
-    it('should update a todo', async () => {
-      const todo = await prisma.todo.create({
-        data: {
-          title: 'Original Title',
-          completed: false,
-        },
-      });
-
-      const updated = await prisma.todo.update({
-        where: { id: todo.id },
-        data: {
-          title: 'Updated Title',
-          completed: true,
-        },
-      });
-
-      expect(updated.title).toBe('Updated Title');
-      expect(updated.completed).toBe(true);
-      expect(updated.id).toBe(todo.id);
-    });
-  });
-
-  describe('deleteTodo', () => {
-    it('should delete a todo', async () => {
-      // このテストの前にデータをクリーンアップ
-      await prisma.todo.deleteMany({
-        where: {
-          title: 'To Delete',
-        },
-      });
-
-      const todo = await prisma.todo.create({
-        data: {
-          title: 'To Delete',
-          completed: false,
-        },
-      });
-
-      await prisma.todo.delete({
-        where: { id: todo.id },
-      });
-
-      const deleted = await prisma.todo.findUnique({
-        where: { id: todo.id },
-      });
-
-      expect(deleted).toBeNull();
+      const todo1 = result.find((t) => t.title === 'Todo 1');
+      const todo2 = result.find((t) => t.title === 'Todo 2');
+      expect(todo1).not.toBeUndefined();
+      expect(todo2).not.toBeUndefined();
+      expect(todo1?.completed).toBe(false);
+      expect(todo2?.completed).toBe(true);
     });
   });
 });

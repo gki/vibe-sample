@@ -16,9 +16,18 @@
     "build:web": "pnpm --filter web build",
     "start": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api start\" \"pnpm --filter web start\"",
     "test": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api test\" \"pnpm --filter web test\"",
+    "test:unit": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api test:unit\" \"pnpm --filter web test:unit\"",
+    "test:integration": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api test:integration\" \"pnpm --filter web test:integration\"",
     "test:api": "pnpm --filter api test",
+    "test:api:unit": "pnpm --filter api test:unit",
+    "test:api:integration": "pnpm --filter api test:integration",
     "test:web": "pnpm --filter web test",
+    "test:web:unit": "pnpm --filter web test:unit",
+    "test:web:integration": "pnpm --filter web test:integration",
     "test:coverage": "concurrently -n \"api,web\" -c \"blue,green\" \"pnpm --filter api test:coverage\" \"pnpm --filter web test:coverage\"",
+    "test:e2e": "pnpm --filter api test:e2e:setup && export DATABASE_URL=\"file:$(pwd)/api/prisma/test.db\" && playwright test && pnpm --filter api test:e2e:cleanup",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:headed": "playwright test --headed",
     "lint": "pnpm knip && pnpm --filter api lint && pnpm --filter web lint",
     "lint:api": "pnpm --filter api lint",
     "lint:web": "pnpm --filter web lint",
@@ -28,6 +37,8 @@
     "format:web": "pnpm --filter web format"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@prisma/client": "^6.18.0",
     "concurrently": "^8.2.2",
     "knip": "^5.66.4"
   },

@@ -13,6 +13,10 @@ export default defineConfig({
     globals: true,
     environment: 'happy-dom',
     setupFiles: ['./vitest.setup.ts'],
+    include: process.env.VITEST_INTEGRATION
+      ? ['**/*.integration.test.*']
+      : ['**/*.{test,spec}.?(c|m)[jt]s?(x)'],
+    exclude: ['**/node_modules/**', '**/.git/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
